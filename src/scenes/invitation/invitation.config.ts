@@ -6,10 +6,10 @@ import type {
 } from "./invitation.types";
 
 export const INVITATION_CONFIG: InvitationConfig = {
-  groomName: "Rohith",
-  brideName: "Madhavi",
-  weddingDateIso: "2026-12-15T09:00:00+05:30",
-  weddingDateDisplay: "December 15, 2026",
+  groomName: "Durga Venkat VaraParasad",
+  brideName: "Sowjanya",
+  weddingDateIso: "2026-07-03T01:51:00+05:30",
+  weddingDateDisplay: "July 2, 2026",
   exploreTargetId: "story",
 } as const;
 
