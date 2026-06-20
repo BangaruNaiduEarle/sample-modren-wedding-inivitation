@@ -1,6 +1,10 @@
 export { WishesExperience } from "./WishesExperience";
-export { WishCard } from "./WishCard";
-export { WEDDING_WISHES } from "./wishes.config";
+export { WishCardLegacy as WishCard } from "./WishCard.legacy";
+export {
+  WEDDING_WISHES,
+  WISHES_SECTION_SUBTITLE,
+  WISHES_USE_EXPERIMENTAL,
+} from "./wishes.config";
 export {
   goldBorderStyle,
   paperBackground,

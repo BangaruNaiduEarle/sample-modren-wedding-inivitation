@@ -3,7 +3,10 @@ export interface InvitationConfig {
   readonly brideName: string;
   readonly weddingDateIso: string;
   readonly weddingDateDisplay: string;
+  readonly heroSubtitle: string;
+  readonly auspiciousGreeting: string;
   readonly exploreTargetId: string;
+  readonly ctaLabel: string;
 }
 
 export interface CountdownValues {

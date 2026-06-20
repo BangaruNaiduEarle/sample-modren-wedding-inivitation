@@ -1,51 +1,39 @@
+import { INVITATION_DATA } from "@/content/invitation.data";
+
 import type { CelebrationEvent, CelebrationPattern } from "./celebrations.types";
+
+const { kalyanam, reception } = INVITATION_DATA.ceremonies;
 
 export const CELEBRATION_EVENTS: readonly CelebrationEvent[] = [
   {
-    id: "haldi",
-    title: "Haldi",
-    subtitle: "Golden blessings & turmeric warmth",
-    date: "December 13, 2026",
-    time: "10:00 AM",
-    venue: "Garden Courtyard",
-    gradient: { from: "gold", via: "peach", to: "maroon" },
-    accent: "gold",
-    illustration: "family-meeting",
-  },
-  {
-    id: "mehendi",
-    title: "Mehendi",
-    subtitle: "Henna, laughter & sisterhood",
-    date: "December 13, 2026",
-    time: "4:00 PM",
-    venue: "Terrace Pavilion",
-    gradient: { from: "green", via: "maroon", to: "navy" },
-    accent: "green",
-    illustration: "family-gathering",
-  },
-  {
-    id: "sangeet",
-    title: "Sangeet",
-    subtitle: "Music, dance & celebration",
-    date: "December 14, 2026",
-    time: "7:00 PM",
-    venue: "Grand Ballroom",
-    gradient: { from: "maroon", via: "navy", to: "gold" },
-    accent: "gold",
-    illustration: "cake-cutting",
-  },
-  {
-    id: "wedding",
-    title: "Wedding",
-    subtitle: "Two souls, one sacred vow",
-    date: "December 15, 2026",
-    time: "9:00 AM",
-    venue: "Temple Mandap",
+    id: "kalyanam",
+    title: kalyanam.title,
+    subtitle: kalyanam.subtitle,
+    date: kalyanam.date,
+    time: kalyanam.time,
+    venue: kalyanam.venue,
     gradient: { from: "maroon", via: "gold", to: "navy" },
     accent: "maroon",
-    illustration: "sacred-fire",
+    illustration: kalyanam.illustration,
+  },
+  {
+    id: "reception",
+    title: reception.title,
+    subtitle: reception.subtitle,
+    date: reception.date,
+    time: reception.time,
+    venue: reception.venue,
+    gradient: { from: "gold", via: "champagne", to: "maroon" },
+    accent: "gold",
+    illustration: reception.illustration,
   },
 ] as const;
+
+/** Set to `false` to revert to the legacy celebrations carousel. */
+export const CELEBRATIONS_USE_EXPERIMENTAL = true;
+
+export const CELEBRATIONS_SECTION_SUBTITLE =
+  INVITATION_DATA.sections.celebrations.subtitle;
 
 export const CARD_WIDTH_CLASS = "w-[88vw] max-w-[420px] sm:w-[72vw] sm:max-w-[480px]";
 

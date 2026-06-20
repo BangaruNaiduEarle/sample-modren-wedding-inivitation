@@ -5,20 +5,116 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { colors } from "@/styles/theme";
 
+import { useLanguage } from "@/i18n";
+
 import { PolaroidCard } from "./PolaroidCard";
 import { ScrapbookDoodles } from "./ScrapbookDoodles";
-import { JOURNEY_MEMORIES } from "./journey.config";
+import {
+  CARD_WIDTH_CLASS,
+  DESKTOP_CARD_WIDTH_CLASS,
+  JOURNEY_MEMORIES,
+  MOBILE_CAROUSEL_GAP,
+} from "./journey.config";
 
-export function JourneyExperience() {
+function PaginationDots({
+  total,
+  activeIndex,
+  onSelect,
+}: {
+  readonly total: number;
+  readonly activeIndex: number;
+  readonly onSelect: (index: number) => void;
+}) {
+  return (
+    <div
+      className="flex items-center justify-center gap-2"
+      role="tablist"
+      aria-label="Story progress"
+    >
+      {Array.from({ length: total }, (_, index) => (
+        <button
+          key={index}
+          type="button"
+          role="tab"
+          aria-selected={activeIndex === index}
+          aria-label={`Memory ${index + 1} of ${total}`}
+          onClick={() => onSelect(index)}
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          <motion.span
+            className="block rounded-full"
+            animate={{
+              width: activeIndex === index ? 24 : 8,
+              height: 8,
+              backgroundColor:
+                activeIndex === index
+                  ? colors.gold
+                  : `color-mix(in srgb, ${colors.gold} 40%, transparent)`,
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function DesktopTimeline() {
+  return (
+    <div className="relative mx-auto hidden w-full max-w-5xl flex-col gap-16 px-10 py-10 md:flex lg:max-w-6xl lg:gap-20 lg:px-16">
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-1/2 top-0 w-0.5 -translate-x-1/2"
+        style={{
+          background: `linear-gradient(180deg, transparent, ${colors.gold} 15%, ${colors.gold} 85%, transparent)`,
+        }}
+      />
+
+      {JOURNEY_MEMORIES.map((memory, index) => {
+        const isLeft = index % 2 === 0;
+
+        return (
+          <motion.div
+            key={memory.id}
+            initial={{ opacity: 1, x: isLeft ? -24 : 24, y: 16 }}
+            whileInView={{ opacity: 1, x: 0, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className={`relative flex ${isLeft ? "justify-start pr-[46%]" : "justify-end pl-[46%]"}`}
+          >
+            <div
+              aria-hidden="true"
+              className="absolute left-1/2 top-10 z-10 size-5 -translate-x-1/2 rounded-full"
+              style={{
+                background: colors.gold,
+                boxShadow: `0 0 16px color-mix(in srgb, ${colors.gold} 55%, transparent)`,
+                border: `2px solid ${colors.ivory}`,
+              }}
+            />
+
+            <div className={DESKTOP_CARD_WIDTH_CLASS}>
+              <PolaroidCard
+                memory={memory}
+                index={index}
+                isActive
+                variant="desktop"
+              />
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}
+
+function MobileCarousel() {
+  const { t } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const updateActiveIndex = useCallback((): void => {
     const container = scrollRef.current;
-
-    if (!container) {
-      return;
-    }
+    if (!container) return;
 
     const containerCenter = container.scrollLeft + container.clientWidth / 2;
     let closestIndex = 0;
@@ -39,22 +135,69 @@ export function JourneyExperience() {
     setActiveIndex(closestIndex);
   }, []);
 
+  const scrollToIndex = useCallback((index: number): void => {
+    const container = scrollRef.current;
+    const card = container?.querySelectorAll<HTMLElement>("[data-polaroid-card]")[index];
+    card?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, []);
+
   useEffect(() => {
     updateActiveIndex();
   }, [updateActiveIndex]);
 
   return (
+    <div className="flex flex-1 flex-col md:hidden">
+      <div
+        ref={scrollRef}
+        onScroll={updateActiveIndex}
+        className={`flex flex-1 items-center overflow-x-auto overflow-y-visible px-[5vw] pb-6 pt-4 snap-x snap-mandatory hide-scrollbar ${MOBILE_CAROUSEL_GAP}`}
+      >
+        {JOURNEY_MEMORIES.map((memory, index) => (
+          <div key={memory.id} data-polaroid-card className={`${CARD_WIDTH_CLASS} shrink-0 snap-center`}>
+            <PolaroidCard
+              memory={memory}
+              index={index}
+              isActive={activeIndex === index}
+              variant="mobile"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="px-6 pb-6 pt-2">
+        <PaginationDots
+          total={JOURNEY_MEMORIES.length}
+          activeIndex={activeIndex}
+          onSelect={scrollToIndex}
+        />
+
+        <motion.p
+          animate={{ opacity: [0.7, 1, 0.7], x: [0, 6, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="mt-4 text-center font-body text-sm tracking-wide text-navy"
+        >
+          {t.story.swipeHint}
+        </motion.p>
+      </div>
+    </div>
+  );
+}
+
+export function JourneyExperience() {
+  const { t } = useLanguage();
+
+  return (
     <section
       id="story"
-      aria-label="Our Journey"
+      aria-label={t.story.ariaLabel}
       className="relative min-h-dvh snap-start overflow-hidden"
     >
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(circle at 20% 80%, color-mix(in srgb, ${colors.peach} 30%, transparent) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, color-mix(in srgb, ${colors.gold} 12%, transparent) 0%, transparent 45%),
+            radial-gradient(circle at 20% 80%, color-mix(in srgb, ${colors.champagne} 40%, transparent) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, color-mix(in srgb, ${colors.gold} 15%, transparent) 0%, transparent 45%),
             ${colors.ivory}
           `,
         }}
@@ -77,72 +220,20 @@ export function JourneyExperience() {
       <ScrapbookDoodles />
 
       <div className="relative z-10 flex h-full min-h-dvh flex-col">
-        <motion.header
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="px-6 pt-14 sm:pt-16"
-        >
-          <p className="font-heading text-[11px] uppercase tracking-[0.28em] text-muted">
-            Scene II
+        <header className="px-6 pt-14 sm:px-10 sm:pt-16">
+          <p className="font-section text-[10px] uppercase tracking-[0.3em] text-muted">
+            {t.story.scene}
           </p>
-          <h2 className="font-script mt-1 text-[clamp(2.25rem,10vw,3.5rem)] leading-none text-maroon">
-          From First Hello To Forever
+          <h2 className="font-script mt-1 text-[clamp(2.5rem,10vw,3.75rem)] leading-none text-maroon">
+            {t.story.title}
           </h2>
-        </motion.header>
+          <p className="font-body mt-3 max-w-md text-sm font-light text-foreground sm:text-base">
+            {t.story.subtitle}
+          </p>
+        </header>
 
-        <div
-          className="mt-5 flex gap-1 px-6 sm:mt-6"
-          role="tablist"
-          aria-label="Story progress"
-        >
-          {JOURNEY_MEMORIES.map((memory, index) => (
-            <motion.div
-              key={memory.id}
-              role="tab"
-              aria-selected={activeIndex === index}
-              className="h-0.5 flex-1 overflow-hidden rounded-full"
-              style={{
-                backgroundColor: `color-mix(in srgb, ${colors.gold} 22%, transparent)`,
-              }}
-            >
-              <motion.div
-                className="h-full rounded-full bg-accent"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: index <= activeIndex ? 1 : 0 }}
-                style={{ transformOrigin: "left center" }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              />
-            </motion.div>
-          ))}
-        </div>
-
-        <div
-          ref={scrollRef}
-          onScroll={updateActiveIndex}
-          className="mt-8 flex flex-1 items-center gap-0 overflow-x-auto overflow-y-visible px-[11vw] pb-36 pt-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] sm:px-16 sm:pb-40 [&::-webkit-scrollbar]:hidden"
-        >
-          {JOURNEY_MEMORIES.map((memory, index) => (
-            <div key={memory.id} data-polaroid-card>
-              <PolaroidCard
-                memory={memory}
-                index={index}
-                isActive={activeIndex === index}
-              />
-            </div>
-          ))}
-        </div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="pointer-events-none absolute bottom-28 left-0 right-0 text-center font-script text-sm text-muted md:hidden sm:bottom-32"
-        >
-          swipe to turn the page →
-        </motion.p>
+        <MobileCarousel />
+        <DesktopTimeline />
       </div>
     </section>
   );

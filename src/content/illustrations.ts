@@ -1,3 +1,5 @@
+import { brideDisplayName, groomDisplayName } from "./invitation.data";
+
 export type IllustrationId =
   | "family-meeting"
   | "family-gathering"
@@ -15,17 +17,17 @@ export const ILLUSTRATIONS: Record<IllustrationId, IllustrationAsset> = {
   "family-meeting": {
     id: "family-meeting",
     src: "/images/illustrations/family-meeting.png",
-    alt: "Rohith and Madhavi with family elders in a warm blessing ceremony",
+    alt: `${groomDisplayName()} with family elders in a warm blessing ceremony`,
   },
   "family-gathering": {
     id: "family-gathering",
     src: "/images/illustrations/family-gathering.png",
-    alt: "Joyful Indian family gathering with traditional sweets and marigold decor",
+    alt: `Joyful gathering celebrating ${groomDisplayName()} & ${brideDisplayName()}`,
   },
   "wedding-arch": {
     id: "wedding-arch",
     src: "/images/illustrations/wedding-arch.png",
-    alt: "Bride and groom under a golden wedding arch surrounded by family",
+    alt: `${groomDisplayName()} and ${brideDisplayName()} under a golden wedding arch`,
   },
   "sacred-fire": {
     id: "sacred-fire",
@@ -35,7 +37,7 @@ export const ILLUSTRATIONS: Record<IllustrationId, IllustrationAsset> = {
   "cake-cutting": {
     id: "cake-cutting",
     src: "/images/illustrations/cake-cutting.png",
-    alt: "Bride and groom cutting their wedding cake with family cheering",
+    alt: "Reception celebration with family and loved ones",
   },
 } as const;
 

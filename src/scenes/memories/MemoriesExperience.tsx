@@ -4,22 +4,27 @@ import { motion } from "framer-motion";
 
 import { colors } from "@/styles/theme";
 
+import { useLanguage } from "@/i18n";
+
 import { MASONRY_COLUMN_CLASS, MEMORY_ITEMS } from "./memories.config";
-import { MemoryPhotoCard } from "./MemoryPhotoCard";
+import { MemoryPhotoCard, useGalleryLightbox } from "./MemoryPhotoCard";
 
 export function MemoriesExperience() {
+  const { open, modal } = useGalleryLightbox();
+  const { t } = useLanguage();
+
   return (
     <section
       id="gallery"
-      aria-label="Memories"
+      aria-label={t.gallery.ariaLabel}
       className="relative min-h-dvh snap-start overflow-hidden"
     >
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(circle at 15% 20%, color-mix(in srgb, ${colors.peach} 35%, transparent) 0%, transparent 45%),
-            radial-gradient(circle at 85% 75%, color-mix(in srgb, ${colors.gold} 15%, transparent) 0%, transparent 40%),
+            radial-gradient(circle at 15% 20%, color-mix(in srgb, ${colors.champagne} 45%, transparent) 0%, transparent 45%),
+            radial-gradient(circle at 85% 75%, color-mix(in srgb, ${colors.gold} 18%, transparent) 0%, transparent 40%),
             ${colors.ivory}
           `,
         }}
@@ -42,14 +47,14 @@ export function MemoriesExperience() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8 sm:mb-10"
         >
-          <p className="font-heading text-[11px] uppercase tracking-[0.28em] text-muted">
-            Scene IV
+          <p className="font-section text-[10px] uppercase tracking-[0.28em] text-muted">
+            {t.gallery.scene}
           </p>
           <h2 className="font-script mt-1 text-[clamp(2.25rem,10vw,3.5rem)] leading-none text-maroon">
-            Memories
+            {t.gallery.title}
           </h2>
-          <p className="font-body mt-3 max-w-md text-sm leading-relaxed text-foreground sm:text-base">
-            A living album — moments pinned with love, light, and laughter.
+          <p className="font-body mt-3 max-w-md text-sm font-light leading-relaxed text-foreground sm:text-base">
+            {t.gallery.subtitle}
           </p>
         </motion.header>
 
@@ -61,10 +66,17 @@ export function MemoriesExperience() {
           className={MASONRY_COLUMN_CLASS}
         >
           {MEMORY_ITEMS.map((memory, index) => (
-            <MemoryPhotoCard key={memory.id} memory={memory} index={index} />
+            <MemoryPhotoCard
+              key={memory.id}
+              memory={memory}
+              index={index}
+              onOpen={open}
+            />
           ))}
         </motion.div>
       </div>
+
+      {modal}
     </section>
   );
 }

@@ -8,7 +8,7 @@ export type DockItemId =
   | "blessings"
   | "location";
 
-export type DockVariant = "desktop" | "mobile";
+export type DockVariant = "desktop" | "mobile" | "floating";
 
 export interface DockNavItem {
   readonly id: DockItemId;
@@ -26,7 +26,7 @@ export interface DockItemMotionConfig {
 }
 
 export interface DockLayoutConfig {
-  readonly desktopBottomOffset: string;
+  readonly bottomOffset: string;
   readonly mobileSafeAreaClass: string;
 }
 
@@ -44,14 +44,14 @@ export interface DockProps {
 }
 
 export const DEFAULT_DOCK_ITEM_MOTION: DockItemMotionConfig = {
-  hoverScale: 1.18,
-  hoverLift: -6,
-  tapScale: 0.9,
+  hoverScale: 1.12,
+  hoverLift: -4,
+  tapScale: 0.92,
   springStiffness: 420,
   springDamping: 28,
 } as const;
 
 export const DEFAULT_DOCK_LAYOUT: DockLayoutConfig = {
-  desktopBottomOffset: "2rem",
+  bottomOffset: "max(1rem, env(safe-area-inset-bottom, 1rem))",
   mobileSafeAreaClass: "pb-[max(0.5rem,env(safe-area-inset-bottom))]",
 } as const;

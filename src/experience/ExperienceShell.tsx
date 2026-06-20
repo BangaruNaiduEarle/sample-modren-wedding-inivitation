@@ -12,10 +12,12 @@ import {
 import { ExperienceProvider, useExperience } from "./ExperienceProvider";
 import { SceneChapter } from "./SceneChapter";
 import { StoryProgress } from "./StoryProgress";
+import { useLanguage } from "@/i18n";
 
 function ExperienceChrome({ children }: { readonly children: React.ReactNode }) {
   const { activeChapterIndex, chapterProgress, scrollToChapter } =
     useExperience();
+  const { localeClass } = useLanguage();
   const ambient =
     CHAPTER_AMBIENT_INTENSITY[activeChapterIndex] ??
     CHAPTER_AMBIENT_INTENSITY[0];
@@ -32,7 +34,7 @@ function ExperienceChrome({ children }: { readonly children: React.ReactNode }) 
 
       <div
         id={EXPERIENCE_SCROLL_ID}
-        className="experience-scroll fixed inset-0 overflow-x-hidden overflow-y-auto snap-y snap-mandatory"
+        className={`experience-scroll fixed inset-0 overflow-x-hidden overflow-y-auto snap-y snap-mandatory ${localeClass}`}
       >
         {children}
       </div>

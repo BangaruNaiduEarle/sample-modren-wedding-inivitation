@@ -6,10 +6,15 @@
 export const colorValues = {
   ivory: "#FFF8F0",
   gold: "#D4AF37",
-  maroon: "#7B1E3A",
-  peach: "#FAD6C4",
+  yellow: "#EFBF04",
+  champagne: "#F7E7CE",
+  cream: "#F5EFE6",
+  maroon: "#6B0F1A",
+  kumkuma: "#800020",
+  peach: "#F7E7CE",
   green: "#4F6F52",
   navy: "#1D2635",
+  pink: "#D4849A",
 } as const;
 
 export type ThemeColor = keyof typeof colorValues;
@@ -17,20 +22,25 @@ export type ThemeColor = keyof typeof colorValues;
 export const colors = {
   ivory: "var(--color-ivory)",
   gold: "var(--color-gold)",
+  yellow: "var(--color-yellow)",
+  champagne: "var(--color-champagne)",
+  cream: "var(--color-cream)",
   maroon: "var(--color-maroon)",
+  kumkuma: "var(--color-kumkuma)",
   peach: "var(--color-peach)",
   green: "var(--color-green)",
   navy: "var(--color-navy)",
+  pink: "var(--color-pink)",
 } as const satisfies Record<ThemeColor, string>;
 
 export const semanticColors = {
   background: colors.ivory,
-  surface: colors.peach,
+  surface: colors.champagne,
   foreground: colors.navy,
   muted: colors.green,
   accent: colors.gold,
   accentAlt: colors.maroon,
-  highlight: colors.peach,
+  highlight: colors.cream,
 } as const;
 
 export type SemanticColor = keyof typeof semanticColors;
@@ -38,6 +48,7 @@ export type SemanticColor = keyof typeof semanticColors;
 export const fontFamily = {
   script: "var(--font-script)",
   heading: "var(--font-heading)",
+  section: "var(--font-section)",
   body: "var(--font-body)",
 } as const;
 
@@ -68,8 +79,10 @@ export const shadowValues = {
   medium:
     "0 8px 32px color-mix(in srgb, var(--color-navy) 12%, transparent)",
   elevated:
-    "0 16px 48px color-mix(in srgb, var(--color-maroon) 10%, transparent)",
-  glow: "0 0 32px color-mix(in srgb, var(--color-gold) 28%, transparent)",
+    "0 16px 48px color-mix(in srgb, var(--color-maroon) 12%, transparent)",
+  glow: "0 0 32px color-mix(in srgb, var(--color-gold) 32%, transparent)",
+  premium:
+    "0 8px 32px color-mix(in srgb, var(--color-gold) 18%, transparent), 0 2px 8px color-mix(in srgb, var(--color-maroon) 8%, transparent)",
 } as const;
 
 export type ThemeShadow = keyof typeof shadowValues;
@@ -79,12 +92,13 @@ export const shadows = {
   medium: "var(--shadow-medium)",
   elevated: "var(--shadow-elevated)",
   glow: "var(--shadow-glow)",
+  premium: "var(--shadow-premium)",
 } as const satisfies Record<ThemeShadow, string>;
 
 export const glassValues = {
-  bg: "color-mix(in srgb, var(--color-ivory) 72%, transparent)",
-  border: "color-mix(in srgb, var(--color-gold) 24%, transparent)",
-  blur: "16px",
+  bg: "color-mix(in srgb, var(--color-ivory) 78%, transparent)",
+  border: "color-mix(in srgb, var(--color-gold) 32%, transparent)",
+  blur: "20px",
 } as const;
 
 export const glass = {
@@ -123,12 +137,12 @@ function paletteCssVariables(): Record<string, string> {
 function semanticCssVariables(): Record<string, string> {
   const semanticToPalette: Record<SemanticColor, ThemeColor> = {
     background: "ivory",
-    surface: "peach",
+    surface: "champagne",
     foreground: "navy",
     muted: "green",
     accent: "gold",
     accentAlt: "maroon",
-    highlight: "peach",
+    highlight: "cream",
   };
 
   return Object.fromEntries(

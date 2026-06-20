@@ -23,6 +23,7 @@ export interface MemoryItem {
 export interface MemoryPhotoCardProps {
   readonly memory: MemoryItem;
   readonly index: number;
+  readonly onOpen: (memory: MemoryItem) => void;
 }
 
 export const MEMORY_ASPECT_CLASS: Record<MemoryAspect, string> = {

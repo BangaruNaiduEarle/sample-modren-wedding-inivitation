@@ -6,9 +6,11 @@ export {
   COUNTDOWN_LABELS,
   FLOATING_PETALS,
   INVITATION_CONFIG,
+  MANDALA_IMAGE,
   MANDALA_ROTATION_DURATION,
   MARIGOLD_PLACEMENTS,
 } from "./invitation.config";
+export { INVITATION_DATA } from "@/content/invitation.data";
 export {
   computeCountdown,
   padCountdownUnit,

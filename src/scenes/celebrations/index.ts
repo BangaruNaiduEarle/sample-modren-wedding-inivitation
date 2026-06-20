@@ -1,10 +1,12 @@
 export { CelebrationsExperience } from "./CelebrationsExperience";
-export { EventCard } from "./EventCard";
+export { EventCardLegacy as EventCard } from "./EventCard.legacy";
 export {
   AMBIENT_PATTERNS,
   CARD_HEIGHT_CLASS,
   CARD_WIDTH_CLASS,
   CELEBRATION_EVENTS,
+  CELEBRATIONS_SECTION_SUBTITLE,
+  CELEBRATIONS_USE_EXPERIMENTAL,
 } from "./celebrations.config";
 export {
   accentColorToken,

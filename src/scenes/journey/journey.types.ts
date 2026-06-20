@@ -19,8 +19,11 @@ export interface ScrapbookDoodle {
   readonly scale: number;
 }
 
+export type PolaroidVariant = "mobile" | "desktop";
+
 export interface PolaroidCardProps {
   readonly memory: JourneyMemory;
   readonly index: number;
   readonly isActive: boolean;
+  readonly variant?: PolaroidVariant;
 }

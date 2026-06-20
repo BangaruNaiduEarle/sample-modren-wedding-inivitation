@@ -1,7 +1,7 @@
 import type { IllustrationId } from "@/content/illustrations";
 import type { ThemeColor } from "@/styles/theme";
 
-export type CelebrationEventId = "haldi" | "mehendi" | "sangeet" | "wedding";
+export type CelebrationEventId = "kalyanam" | "reception";
 
 export interface CelebrationGradient {
   readonly from: ThemeColor;

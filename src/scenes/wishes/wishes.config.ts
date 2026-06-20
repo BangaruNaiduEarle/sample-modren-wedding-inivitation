@@ -1,3 +1,5 @@
+import { INVITATION_DATA } from "@/content/invitation.data";
+
 import type { WeddingWish } from "./wishes.types";
 
 export const WEDDING_WISHES: readonly WeddingWish[] = [
@@ -50,7 +52,7 @@ export const WEDDING_WISHES: readonly WeddingWish[] = [
     guestName: "Arjun",
     relation: "Friend",
     message:
-      "Rohith, the office will never be the same. Madhavi, thank you for making him smile on Monday mornings. Much love to you both.",
+      "Varaprasad, the office will never be the same. Soujanya, thank you for making him smile on Monday mornings. Much love to you both.",
     rotate: -0.9,
     offsetX: -10,
     floatDelay: 0.6,
@@ -79,3 +81,8 @@ export const WEDDING_WISHES: readonly WeddingWish[] = [
     floatDuration: 4.9,
   },
 ] as const;
+
+/** Set to `false` to revert to the legacy stacked wishes layout. */
+export const WISHES_USE_EXPERIMENTAL = true;
+
+export const WISHES_SECTION_SUBTITLE = INVITATION_DATA.blessings.wishesSection;

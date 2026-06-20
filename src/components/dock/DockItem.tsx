@@ -16,13 +16,13 @@ export function DockItem({
   onSelect,
 }: DockItemProps) {
   const Icon = item.icon;
-  const isDesktop = variant === "desktop";
+  const isCompact = variant === "floating" || variant === "mobile";
 
   const handleClick = (): void => {
     onSelect(item);
   };
 
-  if (isDesktop) {
+  if (variant === "desktop") {
     return (
       <motion.button
         type="button"
@@ -80,8 +80,13 @@ export function DockItem({
       type="button"
       aria-label={item.label}
       aria-current={isActive ? "page" : undefined}
+      data-cursor="button"
       onClick={handleClick}
-      className="relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-1 pt-2 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
+      className={`relative flex min-w-0 flex-col items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+        isCompact
+          ? "min-h-[44px] flex-1 gap-0.5 px-1 py-1.5"
+          : "flex-1 gap-0.5 px-1 pt-2 focus-visible:ring-inset"
+      }`}
       whileTap={{ scale: motionConfig.tapScale }}
       transition={{
         type: "spring",
@@ -91,8 +96,12 @@ export function DockItem({
     >
       {isActive ? (
         <motion.span
-          layoutId="dock-mobile-indicator"
-          className="absolute top-1 h-0.5 w-5 rounded-full bg-accent"
+          layoutId="dock-floating-indicator"
+          className="absolute inset-x-2 inset-y-1 rounded-xl md:inset-x-1 md:inset-y-0.5 md:rounded-full"
+          style={{
+            background: `color-mix(in srgb, ${colors.gold} 18%, transparent)`,
+            boxShadow: `0 0 16px color-mix(in srgb, ${colors.gold} 25%, transparent)`,
+          }}
           transition={{
             type: "spring",
             stiffness: 400,
@@ -114,7 +123,7 @@ export function DockItem({
         className="relative z-10"
       >
         <Icon
-          size={21}
+          size={isCompact ? 20 : 21}
           strokeWidth={isActive ? 2.25 : 1.85}
           fill={isActive ? colors.maroon : "none"}
         />
@@ -123,10 +132,10 @@ export function DockItem({
       <motion.span
         animate={{
           color: isActive ? colors.maroon : semanticColors.muted,
-          opacity: isActive ? 1 : 0.82,
+          opacity: isActive ? 1 : 0.75,
         }}
         transition={{ duration: 0.2 }}
-        className="relative z-10 max-w-full truncate font-body text-[10px] leading-none tracking-wide"
+        className="relative z-10 max-w-full truncate font-body text-[9px] leading-none tracking-wide sm:text-[10px]"
       >
         {item.label}
       </motion.span>

@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { X, ZoomIn } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 
 import { StoryImage } from "@/components/media";
 import { colors } from "@/styles/theme";
@@ -9,14 +10,15 @@ import { colors } from "@/styles/theme";
 import { MEMORY_ASPECT_CLASS } from "./memories.types";
 import type { MemoryPhotoCardProps } from "./memories.types";
 import { memoryPhotoGradient, polaroidShadow } from "./memories.utils";
+import type { MemoryItem } from "./memories.types";
 
-export function MemoryPhotoCard({ memory, index }: MemoryPhotoCardProps) {
+export function MemoryPhotoCard({ memory, index, onOpen }: MemoryPhotoCardProps) {
   const aspectClass = MEMORY_ASPECT_CLASS[memory.aspect];
 
   return (
     <motion.article
       data-cursor="card"
-      className="mb-4 break-inside-avoid sm:mb-5"
+      className="mb-5 break-inside-avoid sm:mb-6"
       style={{ rotate: `${memory.rotate}deg` }}
       initial={{ opacity: 0, y: 40, scale: 0.94, rotate: memory.rotate - 4 }}
       whileInView={{
@@ -37,15 +39,17 @@ export function MemoryPhotoCard({ memory, index }: MemoryPhotoCardProps) {
         transition: { type: "spring", stiffness: 320, damping: 22 },
       }}
     >
-      <motion.div
-        className="rounded-theme-lg relative overflow-hidden p-2.5 pb-5 sm:p-3 sm:pb-6"
+      <motion.button
+        type="button"
+        onClick={() => onOpen(memory)}
+        className="group relative w-full cursor-pointer overflow-hidden rounded-theme-lg p-2.5 pb-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent sm:p-3 sm:pb-6"
         style={{
           backgroundColor: colors.ivory,
           boxShadow: polaroidShadow(),
+          border: `1px solid color-mix(in srgb, ${colors.gold} 20%, transparent)`,
         }}
-        whileHover={{
-          boxShadow: polaroidShadow(true),
-        }}
+        whileHover={{ boxShadow: polaroidShadow(true) }}
+        aria-label={`View ${memory.caption}`}
       >
         <div
           className={`relative w-full overflow-hidden rounded-theme-md ${aspectClass}`}
@@ -59,33 +63,105 @@ export function MemoryPhotoCard({ memory, index }: MemoryPhotoCardProps) {
           <div
             className="pointer-events-none absolute inset-0"
             style={{
-              background: `linear-gradient(to top, color-mix(in srgb, ${colors.navy} 18%, transparent) 0%, transparent 45%)`,
+              background: `linear-gradient(to top, color-mix(in srgb, ${colors.maroon} 20%, transparent) 0%, transparent 45%)`,
             }}
             aria-hidden="true"
           />
 
-          <motion.div
-            className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full px-2.5 py-1"
-            style={{
-              background: `color-mix(in srgb, ${colors.navy} 55%, transparent)`,
-              backdropFilter: "blur(8px)",
-            }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 + index * 0.05 }}
-          >
-            <Heart size={12} fill={colors.maroon} stroke={colors.gold} strokeWidth={1.5} />
-            <span className="font-body text-[11px] tabular-nums text-ivory">
-              {memory.likes}
-            </span>
-          </motion.div>
+          <div className="absolute inset-0 flex items-center justify-center bg-navy/0 opacity-0 transition-opacity duration-300 group-hover:bg-navy/20 group-hover:opacity-100">
+            <ZoomIn size={28} stroke={colors.gold} className="drop-shadow-lg" />
+          </div>
         </div>
 
         <p className="font-script mt-3 px-1 text-center text-lg leading-tight text-maroon sm:text-xl">
           {memory.caption}
         </p>
-      </motion.div>
+      </motion.button>
     </motion.article>
   );
+}
+
+function LightboxModal({
+  memory,
+  onClose,
+}: {
+  readonly memory: MemoryItem;
+  readonly onClose: () => void;
+}) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  const aspectClass = MEMORY_ASPECT_CLASS[memory.aspect];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
+      style={{ background: "color-mix(in srgb, var(--color-navy) 85%, transparent)" }}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={memory.caption}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="relative max-h-[90dvh] w-full max-w-lg overflow-hidden rounded-theme-xl"
+        style={{
+          background: colors.ivory,
+          border: `2px solid color-mix(in srgb, ${colors.gold} 45%, transparent)`,
+          boxShadow: `0 24px 64px color-mix(in srgb, ${colors.gold} 20%, transparent)`,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-3 top-3 z-10 flex size-10 items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          style={{ background: `color-mix(in srgb, ${colors.navy} 60%, transparent)` }}
+          aria-label="Close"
+        >
+          <X size={20} stroke={colors.ivory} />
+        </button>
+
+        <div className={`relative w-full ${aspectClass}`}>
+          <StoryImage illustrationId={memory.illustration} priority />
+        </div>
+
+        <div className="p-6 text-center">
+          <p className="font-script text-2xl text-maroon">{memory.caption}</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export function useGalleryLightbox() {
+  const [selected, setSelected] = useState<MemoryItem | null>(null);
+
+  const open = useCallback((memory: MemoryItem) => setSelected(memory), []);
+  const close = useCallback(() => setSelected(null), []);
+
+  const modal = (
+    <AnimatePresence>
+      {selected ? (
+        <LightboxModal memory={selected} onClose={close} />
+      ) : null}
+    </AnimatePresence>
+  );
+
+  return { open, modal };
 }

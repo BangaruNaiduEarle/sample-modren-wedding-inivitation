@@ -1,3 +1,5 @@
+import { INVITATION_DATA } from "@/content/invitation.data";
+
 import type {
   AmbientParticle,
   FloatingPetal,
@@ -5,13 +7,19 @@ import type {
   MarigoldPlacement,
 } from "./invitation.types";
 
+/** Hero scene — derived from centralized invitation data. */
 export const INVITATION_CONFIG: InvitationConfig = {
-  groomName: "Durga Venkat VaraParasad",
-  brideName: "Sowjanya",
-  weddingDateIso: "2026-07-03T01:51:00+05:30",
-  weddingDateDisplay: "July 2, 2026",
-  exploreTargetId: "story",
+  groomName: INVITATION_DATA.groom.name,
+  brideName: INVITATION_DATA.bride.name,
+  weddingDateIso: INVITATION_DATA.muhurtham.iso,
+  weddingDateDisplay: INVITATION_DATA.muhurtham.dateDisplay,
+  heroSubtitle: INVITATION_DATA.hero.subtitle,
+  auspiciousGreeting: INVITATION_DATA.auspiciousGreeting.english,
+  exploreTargetId: INVITATION_DATA.hero.exploreTargetId,
+  ctaLabel: INVITATION_DATA.hero.ctaLabel,
 } as const;
+
+export const MANDALA_IMAGE = INVITATION_DATA.illustrations.mandala;
 
 export const MANDALA_ROTATION_DURATION = 120;
 

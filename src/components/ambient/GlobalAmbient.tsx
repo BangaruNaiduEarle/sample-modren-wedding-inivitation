@@ -20,7 +20,7 @@ export function GlobalAmbient({ intensity }: GlobalAmbientProps) {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[1]">
       <MandalaLayer opacity={levels.mandala} />
-      <MarigoldStrings opacity={levels.marigold} />
+      {/* <MarigoldStrings opacity={levels.marigold} /> */}
       <LotusPetals opacity={levels.lotus} />
       <Deepams opacity={levels.deepam} />
       <Sparkles opacity={levels.sparkle} />
