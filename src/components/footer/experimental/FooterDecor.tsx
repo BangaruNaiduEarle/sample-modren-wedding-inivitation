@@ -161,7 +161,7 @@ function WhatsAppIcon() {
 const SOCIAL_ICONS: Record<FooterSocialId, () => ReactElement> = {
   instagram: InstagramIcon,
   whatsapp: WhatsAppIcon,
-  email: () => <Mail size={17} strokeWidth={1.75} aria-hidden="true" />,
+  // email: () => <Mail size={17} strokeWidth={1.75} aria-hidden="true" />,
 };
 
 export function SocialIcon({ id }: { readonly id: FooterSocialId }) {
