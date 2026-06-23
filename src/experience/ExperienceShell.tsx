@@ -24,7 +24,7 @@ function ExperienceChrome({ children }: { readonly children: React.ReactNode }) 
 
   return (
     <>
-      <GlobalAmbient intensity={ambient} />
+      {/* <GlobalAmbient intensity={ambient} /> */}
       <StoryProgress
         activeIndex={activeChapterIndex}
         progress={chapterProgress}
