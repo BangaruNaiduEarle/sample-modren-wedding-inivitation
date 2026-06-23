@@ -71,7 +71,7 @@ export function LocationChapterSection() {
             details={details}
           />
 
-          <div className="location-chapter__contact-grid">
+          {/* <div className="location-chapter__contact-grid">
             {contacts.map((contactItem, index) => (
               <ContactMiniCard
                 key={contactItem.id}
@@ -82,7 +82,7 @@ export function LocationChapterSection() {
                 index={index}
               />
             ))}
-          </div>
+          </div> */}
 
           <motion.footer
             className="location-chapter__footer"

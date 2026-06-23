@@ -205,9 +205,9 @@ export function CoupleExperience() {
           <div className="font-heading text-lg leading-relaxed text-maroon sm:text-xl">
             &ldquo;{coupleQuote}&rdquo;
           </div>
-          <p className="font-body mt-4 text-sm font-light text-foreground">
+          {/* <p className="font-body mt-4 text-sm font-light text-foreground">
             {parents.elderBlessings}
-          </p>
+          </p> */}
           <p className="font-script mt-4 text-2xl text-gold">{t.common.withLoveGratitude}</p>
         </div>
       </motion.div>

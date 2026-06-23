@@ -33,6 +33,7 @@ export function useLocalizedInvitation() {
       groomQualification: data.groom.qualification,
       brideQualification: data.bride.qualification,
       brideHometown: pickLocalized(data.bride.hometown, data.bride.hometownTelugu, isTelugu),
+      groomHometown: pickLocalized(data.groom.hometown, data.groom.hometownTelugu, isTelugu),
       groomParents: {
         father: pickLocalized(
           data.parents.groom.father,
@@ -182,7 +183,7 @@ export function useLocalizedCouple() {
         title: inv.groomTitle,
         qualification: inv.groomQualification,
         role: t.couple.groomRole,
-        tagline: `${inv.groomQualification} · ${inv.groomTitle}`,
+        tagline: `${inv.groomQualification} ·  ${inv.groomHometown.split(",")[0]?.trim() ?? inv.groomHometown}`,
         illustration: illustrations.groomPortrait,
       },
       bride: {

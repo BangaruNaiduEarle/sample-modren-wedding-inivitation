@@ -91,8 +91,10 @@ export function FooterFinale() {
               <motion.a
                 key={link.id}
                 href={link.href}
-                target={link.id === "email" ? undefined : "_blank"}
-                rel={link.id === "email" ? undefined : "noopener noreferrer"}
+                // target={link.id === "email" ? undefined : "_blank"}
+                // rel={link.id === "email" ? undefined : "noopener noreferrer"}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={link.ariaLabel}
                 data-cursor="button"
                 className="site-footer-finale__social-btn"

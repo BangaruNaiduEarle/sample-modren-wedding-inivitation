@@ -42,7 +42,7 @@ export const en: Translations = {
     groomParentsLabel: "Groom's Parents",
     brideParentsLabel: "Bride's Parents",
     coupleQuote:
-      "In the presence of our families and the blessings of the divine, we unite our hearts in sacred matrimony.",
+      "By destiny's design, with our families' blessings and the grace of the divine, we come together in the sacred bond of marriage.",
   },
   story: {
     ariaLabel: "Our Journey",

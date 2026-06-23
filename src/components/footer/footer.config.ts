@@ -25,12 +25,12 @@ export const FOOTER_SOCIAL = [
     href: "https://wa.me/919876543210",
     ariaLabel: "Message us on WhatsApp",
   },
-  {
-    id: "email",
-    label: "Email",
-    href: INVITATION_DATA.contact.find((c) => c.id === "email")?.href ?? "mailto:hello@wedding.com",
-    ariaLabel: "Send us an email",
-  },
+  // {
+  //   id: "email",
+  //   label: "Email",
+  //   href: INVITATION_DATA.contact.find((c) => c.id === "email")?.href ?? "mailto:hello@wedding.com",
+  //   ariaLabel: "Send us an email",
+  // },
 ] as const;
 
 export type FooterSocialId = (typeof FOOTER_SOCIAL)[number]["id"];

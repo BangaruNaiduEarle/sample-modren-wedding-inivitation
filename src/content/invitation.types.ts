@@ -67,7 +67,10 @@ export interface InvitationData {
     readonly telugu: string;
     readonly english: string;
   };
-  readonly groom: PersonWithTelugu;
+  readonly groom: PersonWithTelugu & {
+    readonly hometown: string;
+    readonly hometownTelugu: string;
+  };
   readonly bride: PersonWithTelugu & {
     readonly hometown: string;
     readonly hometownTelugu: string;

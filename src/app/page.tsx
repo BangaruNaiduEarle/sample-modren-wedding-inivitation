@@ -33,9 +33,9 @@ export default function Home() {
       <SceneChapter chapterIndex={3}>
         <MemoriesExperience />
       </SceneChapter>
-      <SceneChapter chapterIndex={3}>
+      {/* <SceneChapter chapterIndex={3}>
         <VideoExperience />
-      </SceneChapter>
+      </SceneChapter> */}
       <SceneChapter chapterIndex={4}>
         <WishesExperience />
       </SceneChapter>

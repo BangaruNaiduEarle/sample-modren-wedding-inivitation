@@ -16,6 +16,10 @@ export const INVITATION_DATA = {
     name: "Durga Venkata Varaprasad",
     nameTelugu: "దుర్గా వెంకట వరప్రసాద్",
     qualification: "C.A.",
+    hometown:
+    "Nallajerla village, Nallajerla mandal, East Godavari district",
+  hometownTelugu:
+    "నల్లజేర్ల గ్రామం, నల్లజేర్ల మండలం, తూర్పు గోదావరి జిల్లా",
   },
 
   bride: {
@@ -25,7 +29,7 @@ export const INVITATION_DATA = {
     nameTelugu: "సౌజన్య",
     qualification: "M.C.A.",
     hometown:
-      "Gauripatnam village, Devarapalli mandal, East Godavari district",
+      "Gowripatnam village, Devarapalli mandal, East Godavari district",
     hometownTelugu:
       "గౌరిపట్నం గ్రామం, దేవరపల్లి మండలం, తూర్పు గోదావరి జిల్లా",
   },
@@ -38,7 +42,7 @@ export const INVITATION_DATA = {
   parents: {
     groom: {
       father: "Sri Papa Trimurtulu",
-      mother: "Smt. Gauri Venkata Padmavathi",
+      mother: "Smt. Gowri Venkata Padmavathi",
       fatherTelugu: "శ్రీ పాపా త్రిమూర్తులు",
       motherTelugu: "శ్రీమతి గౌరి వెంకట పద్మావతి",
     },
@@ -134,7 +138,7 @@ export const INVITATION_DATA = {
     invitation:
       "With the divine blessings of our elders, we humbly request the honour of your presence as we begin this sacred journey together.",
     coupleQuote:
-      "In the presence of our families and the blessings of the divine, we unite our hearts in sacred matrimony.",
+      "By destiny's design, with our families' blessings and the grace of the divine, we come together in the sacred bond of marriage.",
     wishesSection:
       "Heartfelt blessings and beautiful words from our beloved family and friends.",
     locationFooter:
