@@ -25,7 +25,7 @@ export const INVITATION_DATA = {
   bride: {
     title: "Chi.La.Sau.",
     titleTelugu: "చి||ల||సౌ||",
-    name: "Soujanya",
+    name: "Sowjanya",
     nameTelugu: "సౌజన్య",
     qualification: "M.C.A.",
     hometown:

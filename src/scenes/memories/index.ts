@@ -1,5 +1,6 @@
 export { MemoriesExperience } from "./MemoriesExperience";
 export { MemoryPhotoCard } from "./MemoryPhotoCard";
+export { galleryImages } from "./galleryImages";
 export {
   MASONRY_COLUMN_CLASS,
   MEMORY_ITEMS,

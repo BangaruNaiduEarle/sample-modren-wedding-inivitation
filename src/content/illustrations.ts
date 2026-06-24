@@ -16,12 +16,15 @@ export interface IllustrationAsset {
 export const ILLUSTRATIONS: Record<IllustrationId, IllustrationAsset> = {
   "family-meeting": {
     id: "family-meeting",
-    src: "/images/illustrations/family-meeting.png",
+    // src: "/images/illustrations/family-meeting.png",
+    src: "/images/bride-groom/d1.jpeg",
+
     alt: `${groomDisplayName()} with family elders in a warm blessing ceremony`,
   },
   "family-gathering": {
     id: "family-gathering",
-    src: "/images/illustrations/family-gathering.png",
+    // src: "/images/illustrations/family-gathering.png",
+     src: "/images/bride-groom/s2.jpeg",
     alt: `Joyful gathering celebrating ${groomDisplayName()} & ${brideDisplayName()}`,
   },
   "wedding-arch": {

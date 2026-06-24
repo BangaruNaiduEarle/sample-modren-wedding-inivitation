@@ -52,7 +52,7 @@ export const WEDDING_WISHES: readonly WeddingWish[] = [
     guestName: "Arjun",
     relation: "Friend",
     message:
-      "Varaprasad, the office will never be the same. Soujanya, thank you for making him smile on Monday mornings. Much love to you both.",
+      "Varaprasad, the office will never be the same. Sowjanya, thank you for making him smile on Monday mornings. Much love to you both.",
     rotate: -0.9,
     offsetX: -10,
     floatDelay: 0.6,

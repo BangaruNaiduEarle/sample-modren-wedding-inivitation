@@ -1,5 +1,3 @@
-import type { IllustrationId } from "@/content/illustrations";
-
 import type { ThemeColor } from "@/styles/theme";
 
 export type MemoryAspect = "portrait" | "landscape" | "square" | "tall";
@@ -12,12 +10,10 @@ export interface MemoryGradient {
 
 export interface MemoryItem {
   readonly id: string;
-  readonly caption: string;
+  readonly src: string;
   readonly aspect: MemoryAspect;
   readonly rotate: number;
   readonly gradient: MemoryGradient;
-  readonly likes: number;
-  readonly illustration: IllustrationId;
 }
 
 export interface MemoryPhotoCardProps {

@@ -2,9 +2,9 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ZoomIn } from "lucide-react";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
-import { StoryImage } from "@/components/media";
 import { colors } from "@/styles/theme";
 
 import { MEMORY_ASPECT_CLASS } from "./memories.types";
@@ -49,14 +49,18 @@ export function MemoryPhotoCard({ memory, index, onOpen }: MemoryPhotoCardProps)
           border: `1px solid color-mix(in srgb, ${colors.gold} 20%, transparent)`,
         }}
         whileHover={{ boxShadow: polaroidShadow(true) }}
-        aria-label={`View ${memory.caption}`}
+        aria-label={`View photo ${memory.id}`}
       >
         <div
           className={`relative w-full overflow-hidden rounded-theme-md ${aspectClass}`}
           style={{ background: memoryPhotoGradient(memory.gradient) }}
         >
-          <StoryImage
-            illustrationId={memory.illustration}
+          <Image
+            src={memory.src}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+            className="object-cover"
             priority={index < 2}
           />
 
@@ -72,10 +76,6 @@ export function MemoryPhotoCard({ memory, index, onOpen }: MemoryPhotoCardProps)
             <ZoomIn size={28} stroke={colors.gold} className="drop-shadow-lg" />
           </div>
         </div>
-
-        <p className="font-script mt-3 px-1 text-center text-lg leading-tight text-maroon sm:text-xl">
-          {memory.caption}
-        </p>
       </motion.button>
     </motion.article>
   );
@@ -112,7 +112,7 @@ function LightboxModal({
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={memory.caption}
+      aria-label={`Photo ${memory.id}`}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
@@ -138,11 +138,14 @@ function LightboxModal({
         </button>
 
         <div className={`relative w-full ${aspectClass}`}>
-          <StoryImage illustrationId={memory.illustration} priority />
-        </div>
-
-        <div className="p-6 text-center">
-          <p className="font-script text-2xl text-maroon">{memory.caption}</p>
+          <Image
+            src={memory.src}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, 512px"
+            className="object-cover"
+            priority
+          />
         </div>
       </motion.div>
     </motion.div>
